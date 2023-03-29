@@ -1,24 +1,21 @@
-class Accumulator {
-  constructor(initialValue) {
-    this.value = initialValue;
-  }
-
-  increment() {
-    this.value++;
-  }
-
-  decrement() {
-    this.value--;
-  }
+function Accumulator(initialValue) {
+  this.value = initialValue;
 }
 
-class CancelableAccumulator extends Accumulator {
-  constructor(initialValue) {
-    super(initialValue);
-    this.originalValue = initialValue;
-  }
+Accumulator.prototype.increment = function () {
+  this.value++;
+};
 
-  clear() {
-    this.value = this.originalValue;
-  }
+Accumulator.prototype.decrement = function () {
+  this.value--;
+};
+function CancelableAccumulator(initialValue) {
+  Accumulator.call(this, initialValue);
+  this.initialValue = initialValue;
 }
+CancelableAccumulator.prototype = Object.create(Accumulator.prototype);
+CancelableAccumulator.prototype.constructor = CancelableAccumulator;
+
+CancelableAccumulator.prototype.clear = function () {
+  this.value = this.initialValue;
+};
